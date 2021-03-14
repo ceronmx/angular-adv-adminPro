@@ -8,11 +8,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 export const routes: Routes = [
     {
       path: 'dashboard',
       component: PagesComponent,
+      canActivate: [ AuthGuard ],
       children: [
         { path: '', component: DashboardComponent, data: {titulo: 'Dashboard'} },
         { path: 'account-settings', component: AccountSettingsComponent, data: {titulo: 'Ajustes'} },
