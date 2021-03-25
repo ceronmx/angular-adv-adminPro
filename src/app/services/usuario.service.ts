@@ -7,6 +7,7 @@ import { RegisterForm } from '../interfaces/register-form.interface';
 import { catchError, map, tap } from 'rxjs/operators'
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { Usuario } from '../models/usuario.model';
 
 const base_url = environment.base_url;
 declare const gapi: any;
@@ -16,11 +17,20 @@ declare const gapi: any;
 })
 export class UsuarioService {
   public auth2: any;
+  public usuario: Usuario;
 
   constructor(private http: HttpClient,
               private router: Router,
               private ngZone: NgZone) {
     this.initGoogle();
+  }
+
+  get token(){
+    return localStorage.getItem('token') || '';
+  }
+
+  get uid(){
+    return this.usuario.uid || '';
   }
 
 
@@ -48,21 +58,37 @@ export class UsuarioService {
   }
 
   public validateToken(): Observable<boolean> {
-    const token = localStorage.getItem('token') || '';
-
     return this.http.get(`${base_url}/login/renew`, {
       headers: {
-        'x-token': token
+        'x-token': this.token
       }
     }).pipe(
-      tap( (res:any) => {
+      map( (res:any) => {
+        const {
+          email,
+          google,
+          img = '',
+          nombre,
+          rol,
+          uid
+        } = res.usuario;
+
+        this.usuario =  new Usuario(nombre, email, '', img, google, rol, uid);
         localStorage.setItem('token', res.token);
+        return true;
       }),
-      map(res => true),
       catchError(err => of(false))
     );
   }
 
+
+  public putUser(data: {email: string, nombre: string}){
+    return this.http.put(`${base_url}/usuarios/${this.uid}`,data,{
+      headers: {
+        'x-token': this.token
+      }
+    })
+  }
 
   public createUser(formData: RegisterForm){
     return this.http.post(`${base_url}/usuarios`, formData)
@@ -72,6 +98,7 @@ export class UsuarioService {
         })
       );
   }
+
 
   public login(formData: LoginForm){
     return this.http.post(`${base_url}/login`, formData)

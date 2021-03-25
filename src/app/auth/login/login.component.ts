@@ -68,7 +68,6 @@ export class LoginComponent implements OnInit {
   }
 
   async startApp() {
-
     await this.usuarioService.initGoogle();
     this.auth2 = this.usuarioService.auth2;
 
