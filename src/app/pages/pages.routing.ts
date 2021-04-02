@@ -11,6 +11,11 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { PerfilComponent } from './perfil/perfil.component';
 
+
+import { UsuariosComponent } from './mantenimiento/usuarios/usuarios.component';
+import { MedicosComponent } from './mantenimiento/medicos/medicos.component';
+import { HospitalesComponent } from './mantenimiento/hospitales/hospitales.component';
+
 export const routes: Routes = [
     {
       path: 'dashboard',
@@ -23,7 +28,14 @@ export const routes: Routes = [
         { path: 'progress', component: ProgressComponent, data: {titulo: 'ProgressBar'} },
         { path: 'promesas', component: PromesasComponent, data: {titulo: 'Promesas'} },
         { path: 'rxjs', component: RxjsComponent, data: {titulo: 'RxJs'} },
+
+        //Mantenimiento pages
         { path: 'perfil', component: PerfilComponent, data: {titulo: 'Perfil de usuario'} },
+        { path: 'usuarios', component: UsuariosComponent, data: {titulo: 'Mantenimiento de usuarios'} },
+        { path: 'medicos', component: MedicosComponent, data: {titulo: 'Mantenimiento de medicos'} },
+        { path: 'hospitales', component: HospitalesComponent, data: {titulo: 'Mantenimiento de hospitales'} },
+    
+    
         { path: '', pathMatch: 'full', redirectTo: 'dashboard' }
       ]
     }

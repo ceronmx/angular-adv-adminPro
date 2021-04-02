@@ -1,0 +1,89 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text"
+                       placeholder="Buscar usuarios..."
+                       class="form-control"
+                       (keyup)="buscar( txtBusqueda.value )"
+                       #txtBusqueda>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="loading" class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!loading" class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Usuarios ({{total}})</h4>
+                <h6 class="card-subtitle">Lista de usuarios registrados.</h6>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="w100">Avatar</th>
+                                <th>Correo</th>
+                                <th>Nombre</th>
+                                <th class="w140">Rol</th>
+                                <th class="w100">Auth</th>
+                                <th class="text-nowrap">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of usersList">
+                                <td class="text-center"> 
+                                    <img (click)="abrirModal(user)"
+                                         [src]="user.getImage" 
+                                         alt="Avatar del usuario"
+                                         class="cursor avatar">    
+                                </td>
+                                <td> {{user.nombre}} </td>
+                                <td> {{user.email}} </td>
+                                <td>
+                                    <select class="form-control"
+                                            [(ngModel)]="user.role"
+                                            (change)="cambiarRole(user)">
+                                        <option value="ADMIN_ROLE">Admin</option>
+                                        <option value="USER_ROLE">User</option>
+                                    </select>
+                                </td>
+                                <td class="text-center w100"> 
+                                    <span *ngIf="user.google" class="label label-danger">Google</span>
+                                    <span *ngIf="!user.google" class="label label-info">Email</span>
+                                </td>
+                                
+                                <td class="text-nowrap text-center">
+                                    <a (click)="borrarUsuario(user)" 
+                                       data-toggle="tooltip" 
+                                       data-original-title="Eliminar"> 
+                                       <i class="fa fa-close text-danger"></i> 
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div *ngIf="txtBusqueda.value.length === 0" style="width: 100%;" class="text-right">
+                    <button [disabled]="desde === 0" (click)="cambiarPagina(-5)" type="button" class="btn btn-secondary">
+                        <i class="fa fa-angle-left"></i>
+                    </button>
+                    &nbsp;
+                    <button [disabled]="end" (click)="cambiarPagina(5)" type="button" class="btn btn-secondary">
+                        <i class="fa fa-angle-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

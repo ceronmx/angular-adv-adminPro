@@ -1,15 +1,4 @@
-.img-container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 40px;
-}
 
-.img-container img{
-    width: 250px;
-    height: 250px;
-    border-radius: 100%;    
-}
 
 .load-container{
     position: absolute;
@@ -21,3 +10,4 @@
     justify-content: center;
     z-index: 10;
 }
+

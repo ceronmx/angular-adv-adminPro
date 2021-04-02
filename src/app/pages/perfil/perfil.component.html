@@ -51,13 +51,20 @@
             <div class="card-body">
                 <h4 class="card-title">Avatar</h4>
                 <h6 class="card-subtitle">Imagen de usuario</h6>
-                
-                <div class="img-container">
-                    <img *ngIf="!imagenTemp" [src]="usuarioGlobal.getImage">
-                    <img *ngIf="imagenTemp" [src]="imagenTemp">
+                <div class="wrapper">
+                    <div class="img-container">
+                        <a  (click)="cambiar.click()"
+                            class="btn btn-circle bg-success text-white">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                        <img *ngIf="!imagenTemp" [src]="usuarioGlobal.getImage">
+                        <img *ngIf="imagenTemp" [src]="imagenTemp">
+                    </div>
                 </div>
+
                 <input type="file"
-                       (change)="cambiarImagen($event.target.files[0])">
+                       (change)="cambiarImagen($event.target.files[0])" #cambiar
+                       style="display: none;">
 
                 <button (click)="actualizarImagen()"
                         [disabled]="!imagenSubir"
