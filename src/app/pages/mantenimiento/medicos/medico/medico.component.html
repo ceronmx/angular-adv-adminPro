@@ -1,0 +1,79 @@
+<div *ngIf="loading" class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!loading" class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Médico</h4>
+                <h6 class="card-subtitle">Actualizar médico</h6>
+                <form   [formGroup]="medicoForm"
+                        class="form"
+                        (submit)="nuevoMedico()"
+                        autocomplete="off">
+                    <div class="wrapper">
+                        <div  *ngIf="medicoSeleccionado"  
+                              class="img-container">
+                            <img [src]="medicoSeleccionado.img | image:'medicos'"
+                                 (click)="abrirModal()"
+                                 class="mb-3 cursor">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre del Médico</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input  formControlName="nombre"
+                                    type="text" 
+                                    class="form-control" 
+                                    id="exampleInputuname" 
+                                    placeholder="Nombre">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Hopital Asignado</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-home"></i></div>
+                            <select class="form-control"
+                                    formControlName="hospital">
+                                <option value="">Seleccione un hospital</option>
+                                <option *ngFor="let hospital of hospitales"
+                                        [value]="hospital.id">
+                                    {{hospital.nombre}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <button [disabled]="medicoForm.invalid || medicoForm.pristine"
+                            type="submit"  
+                            class="btn btn-success btn-block waves-effect waves-light m-r-10">
+                        <i class="ti-save"></i>
+                        Guardar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 animated fadeIn fast" 
+         *ngIf="hospitalSeleccionado">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Hospital</h4>
+                <h6 class="card-subtitle">Hospital asignado: <b> {{hospitalSeleccionado.nombre}} </b> </h6> 
+                <div class="wrapper">
+                    <div class="img-container">
+                        <img [src]="hospitalSeleccionado.img | image:'hospitales'"
+                             class="mb-3">
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>

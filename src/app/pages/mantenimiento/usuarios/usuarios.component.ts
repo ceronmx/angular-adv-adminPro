@@ -9,8 +9,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuarios',
-  templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.css']
+  templateUrl: './usuarios.component.html'
 })
 export class UsuariosComponent implements OnInit, OnDestroy {
 
@@ -161,6 +160,5 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   abrirModal(usuario: Usuario){
     this.modalImagenService.abrirModal('usuarios', usuario.uid, usuario.img);
-    console.log(usuario);
   }
 }

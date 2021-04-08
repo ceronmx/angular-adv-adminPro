@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { RESOURCE_CACHE_PROVIDER } from '@angular/platform-browser-dynamic';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../models/usuario.model';
@@ -31,6 +32,7 @@ export class BusquedasService {
     );
   }
 
+
   buscar(tipo: 'medicos'|'usuarios'|'hospitales',
          termino: string = ''){
           return this.http.get<any[]>(`${base_url}/todo/coleccion/${tipo}/${termino}`, this.headers)
@@ -40,10 +42,9 @@ export class BusquedasService {
                   case 'usuarios':
                     return this.toArreglodeUsuarios(res.data);
                   case 'medicos':
-                    break;
+                    return res.data;
                   case 'hospitales':
-                    break;
-
+                    return res.data;
                   default:
                     return [];
                 }

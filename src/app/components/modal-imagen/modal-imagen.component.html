@@ -22,8 +22,10 @@
                         </div>
                     </div>
 
-                    <input type="file" (change)="cambiarImagen($event.target.files[0])" #cambiar
-                        style="display: none" />
+                    <input type="file" 
+                           (change)="cambiarImagen($event.target.files[0])" 
+                           style="display: none" 
+                           #cambiar/>
                 </div>
                 <div class="modal-footer">
                     <button (click)="cerrarModal()" type="button" class="btn btn-default waves-effect" data-dismiss="modal">
