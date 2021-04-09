@@ -42,7 +42,7 @@ export class UsuarioService {
     }
   }
 
-  get role(){
+  get role(): 'ADMIN_ROLE'|'USER_ROLE'{
     return this.usuario.role;
   }
 
@@ -80,11 +80,11 @@ export class UsuarioService {
           google,
           img = '',
           nombre,
-          rol,
+          role,
           uid
         } = res.usuario;
 
-        this.usuario =  new Usuario(nombre, email, '', img, google, rol, uid);
+        this.usuario =  new Usuario(nombre, email, '', img, google, role, uid);
         this.guardarData(res.token, res.menu)
         return true;
       }),
