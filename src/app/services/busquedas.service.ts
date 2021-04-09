@@ -14,11 +14,11 @@ export class BusquedasService {
 
   constructor(private http: HttpClient) { }
 
-  get token(){
+  private get token(){
     return localStorage.getItem('token');
   }
 
-  get headers(){
+  private get headers(){
     return {
       headers: {
         'x-token': this.token
@@ -30,6 +30,10 @@ export class BusquedasService {
     return array.map(
       user => new Usuario(user.nombre, user.email, null, user.img, user.google, user.role, user.uid)
     );
+  }
+
+  buscarTodo(termino: string){
+    return this.http.get(`${base_url}/todo/${termino}`, this.headers);
   }
 
 

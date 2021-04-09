@@ -15,9 +15,14 @@
     border-radius: 100%;
 }
 
+.w75{
+    width: 75pxs;
+}
+
 .w100{
     width: 100px;
 }
+
 .w140{
     width: 140px;
 }

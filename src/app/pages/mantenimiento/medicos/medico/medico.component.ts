@@ -140,6 +140,8 @@ export class MedicoComponent implements OnInit, OnDestroy {
   }
 
   abrirModal(){
-    this.modalService.abrirModal('medicos', this.medicoSeleccionado.id);
+    console.log(this.medicoSeleccionado.id);
+    
+    this.modalService.abrirModal('medicos', this.medicoSeleccionado.id, this.medicoSeleccionado.img);
   }
 }

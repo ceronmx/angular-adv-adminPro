@@ -42,6 +42,10 @@ export class UsuarioService {
     }
   }
 
+  get role(){
+    return this.usuario.role;
+  }
+
 
 
   initGoogle(){
@@ -58,6 +62,7 @@ export class UsuarioService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(() => {
       this.ngZone.run(() => {
@@ -80,7 +85,7 @@ export class UsuarioService {
         } = res.usuario;
 
         this.usuario =  new Usuario(nombre, email, '', img, google, rol, uid);
-        localStorage.setItem('token', res.token);
+        this.guardarData(res.token, res.menu)
         return true;
       }),
       catchError(err => of(false))
@@ -101,7 +106,7 @@ export class UsuarioService {
     return this.http.post(`${base_url}/usuarios`, formData)
       .pipe(
         tap( (res: any) => {
-          localStorage.setItem('token', res.token);
+          this.guardarData(res.token, res.menu)
         })
       );
   }
@@ -110,7 +115,7 @@ export class UsuarioService {
     return this.http.post(`${base_url}/login`, formData)
       .pipe(
         tap( (res: any) => {
-          localStorage.setItem('token', res.token);
+          this.guardarData(res.token, res.menu)
         })
       );
   }
@@ -119,8 +124,8 @@ export class UsuarioService {
     return this.http.post(`${base_url}/login/google`, {token})
       .pipe(
         tap( (res: any) => {
-          localStorage.setItem('token', res.jwt);
-        })
+          this.guardarData(res.jwt, res.menu)      
+         })
       );
   }
 
@@ -142,5 +147,10 @@ export class UsuarioService {
 
   deleteUser(user: Usuario){
     return this.http.delete(`${base_url}/usuarios/${user.uid}`, this.headers);
+  }
+
+  guardarData(token: string, menu: any){
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
   }
 }
